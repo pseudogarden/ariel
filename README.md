@@ -6,7 +6,7 @@ This project focuses on the implementation of [graphql](https://graphql.org/) on
 
 ## Project
 The application will be a backend book shelf. The user of the shelf can get a book by:
-```javascript
+```json
   // book
   book {
     title
@@ -57,9 +57,10 @@ npm run start:dev
 
 ## Queries
 The client side should be able to
+- user signup/login
 - get books by title / author / price
-- add book to shelf
-- edit book in shelf
-- remove a book from shelf
-- remove all books by an author from a shelf
-- get all book authors from a shelf
+- add book to user shelf
+- edit book in user shelf
+- remove a book from user shelf
+- remove all books by an author from user shelf
+- get all book authors from user shelf
