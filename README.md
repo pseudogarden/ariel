@@ -6,8 +6,7 @@ This project focuses on the implementation of [graphql](https://graphql.org/) on
 
 ## Project
 The application will be a backend book shelf. The user of the shelf can get a book by:
-```json
-  // book
+```javascript
   book {
     title
     author {
@@ -23,7 +22,6 @@ The application will be a backend book shelf. The user of the shelf can get a bo
     description
   }
 
-  // author
   author {
     name
     birth_date

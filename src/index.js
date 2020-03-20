@@ -1,26 +1,17 @@
 import express from 'express';
-import { gql, ApolloServer } from 'apollo-server-express';
-
-// gql schema
-const typeDefs = gql`
-  type Query {
-    message: String
-  }
-`;
-
-// resolver
-const resolvers = {
-  Query: {
-    message: () => 'Hello World!'
-  },
-};
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs, resolvers } from './generated';
+import models from './models';
 
 // apollo server
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers, context: { models } });
 
 // server
 const app = express();
 server.applyMiddleware({ app });
 
+// sync and authenticate all db models
+models.sequelize.authenticate();
+models.sequelize.sync();
 
 app.listen(3000, () => console.log(`listening on port http://localhost:3000${server.graphqlPath} 🚀 `));
