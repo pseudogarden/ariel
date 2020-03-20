@@ -6,6 +6,10 @@ const { SECRET } = env;
 
 const resolvers = {
   Query: {
+    currentUser: async (parent, args, { user, models }) => {
+      if (!user) throw new Error('Not Authorized');
+      return models.User.findOne({ where: { id: user.id } });
+    },
   },
   Mutation: {
     signup: async (parent, { username, email, password }, { models }) => {

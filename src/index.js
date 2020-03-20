@@ -1,10 +1,32 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import jwt from 'jsonwebtoken';
 import { typeDefs, resolvers } from './generated';
 import models from './models';
+import env from './config/env';
+
+// middleware
+
+const jwtCheck = (token) => {
+  try {
+    if (token) return jwt.verify(token, env.SECRET);
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
 
 // apollo server
-const server = new ApolloServer({ typeDefs, resolvers, context: { models } });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    const tokenWithBearer = req.headers.authorization || '';
+    const token = tokenWithBearer.split(' ')[1];
+    const user = jwtCheck(token);
+    return { user, models };
+  }
+});
 
 // server
 const app = express();
