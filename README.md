@@ -9,24 +9,10 @@ The application will be a backend book shelf. The user of the shelf can get a bo
 ```javascript
   book {
     title
-    author {
-      name
-      birth_date
-    }
-    publish_date
+    author
     description
+    publish_date
   }
-
-  author {
-    name
-    birth_date
-    books {
-      title
-      publish_date
-      description
-    }
-  }
-
 ```
 ## :wrench: Installation
 Clone repo and navigate to project
@@ -46,14 +32,14 @@ Run development server
 npm run start:dev
 ```
 
-## Queries
+## Tasks
 The client side should be able to
-- user signup/login
-- get books by user
-- add book to user shelf
-- edit book in user shelf
-- remove a book from user shelf
-- remove all books by an author from user shelf
+- [x] User signup/login
+- [x] Get books by user
+- [x] Add book to user shelf
+- [ ] Edit book in user shelf
+- [ ] Remove a book from user shelf
+- [ ] Remove books by author from user shelf
 
 ## Queries
 @ localhost:3000/graphql
