@@ -14,11 +14,6 @@ The application will be a backend book shelf. The user of the shelf can get a bo
       birth_date
     }
     publish_date
-    publisher {
-      name
-      address
-    }
-    number_of_pages
     description
   }
 
@@ -28,9 +23,7 @@ The application will be a backend book shelf. The user of the shelf can get a bo
     books {
       title
       publish_date
-      publisher
       description
-      number_of_pages
     }
   }
 
@@ -66,7 +59,7 @@ The client side should be able to
 @ localhost:3000/graphql
 ### Signup
 request
-```json
+```javascript
 mutation {
   signup(username: "fin", email: "fin@test.com", password: "password") {
     id
@@ -90,7 +83,7 @@ response
 
 ### Login
 request
-```json
+```javascript
 mutation {
     login(email: "dan@test.com", password: "password") {
         user {
@@ -118,7 +111,7 @@ response
 
 ### Add Book
 request
-```json
+```javascript
 mutation {
     addBook(
         title: "For Whom The Bell Tolls",
@@ -159,7 +152,7 @@ response
 this simply feeds you the current logged in user
 
 request
-```json
+```javascript
 {
     currentUser {
         id
@@ -185,7 +178,7 @@ response
 books of logged in user
 
 request
-```json
+```javascript
 {
     getBooks {
         id
@@ -221,7 +214,7 @@ response
 books of any user via username
 
 request
-```json
+```javascript
 {
     getBooks(username: "john") {
         id
