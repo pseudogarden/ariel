@@ -21,7 +21,7 @@ const resolvers = {
       const user = await models.User.create({ username, email, password: hashedPassword });
       return user;
     },
-    login: async (parent, { email, password }, { models }) => {
+    login: async (parent, { email, password }, { req, models }) => {
       const user = await models.User.findOne({ where: { email } });
       if (!user) throw new Error('User does not exist');
       const passwordMatch = await bcrypt.compare(password, user.password);
@@ -30,6 +30,7 @@ const resolvers = {
         id: user.id,
         email: user.email
       }, SECRET, { expiresIn: '3d' });
+      req.res.cookie('token', token, { maxAge: 70000000, httpOnly: true });
       return { token, user };
     },
   },

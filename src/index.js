@@ -21,10 +21,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
-    const tokenWithBearer = req.headers.authorization || '';
-    const token = tokenWithBearer.split(' ')[1];
+    const tokenCookie = req.headers.cookie || '';
+    const token = tokenCookie.split('=')[1];
     const user = jwtCheck(token);
-    return { user, models };
+    return { req, user, models };
   }
 });
 
