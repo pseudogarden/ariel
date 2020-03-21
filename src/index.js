@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import jwt from 'jsonwebtoken';
@@ -21,8 +22,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
-    const tokenCookie = req.headers.cookie || '';
-    const token = tokenCookie.split('=')[1];
+    let token;
+    if (req.headers.cookie) token = req.headers.cookie.split('=')[1];
+    if (req.headers.authorization) token = req.headers.authorization.split(' ')[1];
     const user = jwtCheck(token);
     return { req, user, models };
   }

@@ -56,9 +56,202 @@ npm run start:dev
 ## Queries
 The client side should be able to
 - user signup/login
-- get books by title / author / price
+- get books by user
 - add book to user shelf
 - edit book in user shelf
 - remove a book from user shelf
 - remove all books by an author from user shelf
-- get all book authors from user shelf
+
+## Queries
+@ localhost:3000/graphql
+### Signup
+request
+```json
+mutation {
+  signup(username: "fin", email: "fin@test.com", password: "password") {
+    id
+    username
+    email
+  }
+}
+```
+response
+```json
+{
+  "data": {
+    "signup": {
+      "id": 12,
+      "username": "dan",
+      "email": "dan@test.com"
+    }
+  }
+}
+```
+
+### Login
+request
+```json
+mutation {
+    login(email: "dan@test.com", password: "password") {
+        user {
+            id
+            email
+            username
+        }
+    }
+}
+```
+response
+```json
+{
+    "data": {
+        "login": {
+            "user": {
+                "id": 12,
+                "email": "dan@test.com",
+                "username": "dan"
+            }
+        }
+    }
+}
+```
+
+### Add Book
+request
+```json
+mutation {
+    addBook(
+        title: "For Whom The Bell Tolls",
+        author: "Ernest Hemmingway",
+        description: "A Novel about war in sapin",
+        publishDate: "1940-10-21"
+    ) {
+        id
+        title
+        author
+        description
+        user {
+            id
+            username
+        }
+    }
+}
+```
+response
+```json
+{
+    "data": {
+        "addBook": {
+            "id": 7,
+            "title": "For Whom The Bell Tolls",
+            "author": "Ernest Hemmingway",
+            "description": "A Novel about war in sapin",
+            "user": {
+                "id": 12,
+                "username": "dan"
+            }
+        }
+    }
+}
+```
+
+### Current User
+this simply feeds you the current logged in user
+
+request
+```json
+{
+    currentUser {
+        id
+        username
+        email
+    }
+}
+```
+response
+```json
+{
+    "data": {
+        "currentUser": {
+            "id": 12,
+            "username": "dan",
+            "email": "dan@test.com"
+        }
+    }
+}
+```
+
+### Get Books
+books of logged in user
+
+request
+```json
+{
+    getBooks {
+        id
+        title
+        author
+        description
+        user {
+            id
+            username
+        }
+    }
+}
+```
+response
+```json
+{
+    "data": {
+        "getBooks": [
+            {
+                "id": 7,
+                "title": "For Whom The Bell Tolls",
+                "author": "Ernest Hemmingway",
+                "description": "A Novel about war in sapin",
+                "user": {
+                    "id": 12,
+                    "username": "dan"
+                }
+            }
+        ]
+    }
+}
+```
+books of any user via username
+
+request
+```json
+{
+    getBooks(username: "john") {
+        id
+        title
+        author
+        description
+        user {
+            id
+            username
+        }
+    }
+}
+```
+response
+```json
+{
+    "data": {
+        "getBooks": [
+            {
+                "id": 1,
+                "title": "On the Origin of Species",
+                "author": "Charles Darwin",
+                "description": "Textbook about evolution",
+                "user": {
+                    "id": 11,
+                    "username": "john"
+                }
+            }
+        ]
+    }
+}
+```
+

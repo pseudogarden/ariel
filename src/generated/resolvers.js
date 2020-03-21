@@ -13,7 +13,6 @@ const resolvers = {
       if (!user) throw new Error('Not Authorized');
       return models.User.findOne({ where: { id: user.id } });
     },
-    getUser: async (root, { username }, { models }) => models.User.findOne({ where: { username } }),
     getBooks: async (root, { username }, { user, models }) => {
       if (username) {
         const askedUser = await models.User.findOne({ where: { username } });
@@ -43,7 +42,7 @@ const resolvers = {
         email: user.email
       }, SECRET, { expiresIn: '3d' });
       req.res.cookie('token', token, { maxAge: 70000000, httpOnly: true });
-      return { token, user };
+      return { user };
     },
     addBook: async (parent, {
       title,
